@@ -6,8 +6,10 @@
 package assignment2;
 
 import java.net.URL;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -44,20 +46,27 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void userLogin(ActionEvent event) throws ClassNotFoundException, SQLException {
-        byte[] salt = PasswordGen.getSalt();
+       // byte[] salt = PasswordGen.getSalt();
 
-        checkPass(PasswordGen.getPass(pwField.getText(), salt));
-        //   String sql = "INSERT INTO pwStore VALUES('" + unField.getText() + "','" + PasswordGen.getPass(pwField.getText(), salt) + "')";
-      //  sqlCon().createStatement().executeUpdate(sql);
+         
+         checkPass("s");
+         
+        
     }
 
     private void checkPass(String pw) throws ClassNotFoundException, SQLException {
-        ResultSet checkPw = sqlCon().createStatement().executeQuery("SELECT * FROM pwStore");
-        while(checkPw.next()){
-           System.out.println(checkPw.getString("salt"));
-           if(pw.equals(checkPw.getString("salt"))){
+        byte[] salt;
+        ResultSet rs = sqlCon().createStatement().executeQuery("SELECT * FROM pwStore");
+        while(rs.next()){
+           Blob blob = rs.getBlob("salt");
+            int blobLength = (int) blob.length();
+           salt = blob.getBytes(1, blobLength);
+           System.out.println(PasswordGen.getPass(pwField.getText(), salt));
+           if (PasswordGen.getPass(pwField.getText(), salt).equals(rs.getString("pw"))){
                System.out.println("YES");
+               
            }
+           
         }
         
     }

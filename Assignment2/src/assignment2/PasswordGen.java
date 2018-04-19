@@ -15,13 +15,22 @@ import java.security.SecureRandom;
  */
 public class PasswordGen {
 
+    /**
+     * Generates a random salt
+     * @return salt byte
+     */
     public static byte[] getSalt() {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
         random.nextBytes(salt);
         return salt;
     }
-
+/**
+ * Generates a hashed pw using a string and a salt
+ * @param pass
+ * @param salt
+ * @return hashed Password 
+ */
     public static String getPass(String pass, byte[] salt) {
         String hashedPw = null;
         try {
@@ -38,7 +47,7 @@ public class PasswordGen {
             }
 
             hashedPw = sb.toString();
-            System.out.printf("\nThe hashed PW is:                  %s %n", hashedPw);
+            
         } catch (NoSuchAlgorithmException e) {
             System.out.println(e);
         }

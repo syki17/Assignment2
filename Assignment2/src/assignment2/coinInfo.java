@@ -14,7 +14,7 @@ private BigDecimal price;
 
 
 /**
-*   Used so we can get a big decimal
+*   Used so we can get a big decimal object
 * @param price
 * @param symbol
 */

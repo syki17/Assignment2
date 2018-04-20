@@ -69,7 +69,7 @@ public class FXMLDocumentController implements Initializable {
             int blobLength = (int) blob.length();
             salt = blob.getBytes(1, blobLength);
             System.out.println(PasswordGen.getPass(pwField.getText(), salt));
-            checkpass = PasswordGen.getPass(pwField.getText(), salt).equals(rs.getString("pw"));
+            checkpass = PasswordGen.getPass(pwField.getText(), salt).equals(rs.getString("pw")) && unField.getText().equals(rs.getString("login"));
 
         }
         return checkpass;

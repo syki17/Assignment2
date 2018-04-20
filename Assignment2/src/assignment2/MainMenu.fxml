@@ -6,6 +6,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment2.MainMenuController">
-    
+
+<AnchorPane id="AnchorPane" prefHeight="483.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="assignment2.MainMenuController">
+   <children>
+      <TableView fx:id="coinTable" layoutX="85.0" layoutY="23.0" prefHeight="284.0" prefWidth="431.0">
+        <columns>
+          <TableColumn fx:id="coinTableSymbol" prefWidth="182.0" text="Trading-Base Pairs" />
+          <TableColumn fx:id="coinTablePrice" prefWidth="245.0" text="Price (Trading to Base Ratio) " />
+        </columns>
+      </TableView>
+   </children>
 </AnchorPane>

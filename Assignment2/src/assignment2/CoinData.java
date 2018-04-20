@@ -25,7 +25,6 @@ public CoinData() {
 * @param symbol
 */
 public CoinData(String symbol, String price) {
-super();
 this.symbol = symbol;
 this.price = price;
 }

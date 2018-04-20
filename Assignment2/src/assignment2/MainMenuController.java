@@ -124,7 +124,7 @@ public class MainMenuController implements Initializable {
     }
 
     /**
-     * Set the Cell values for the tableview
+     * Sets the Cell values for the tableview
      */
     private void setCellValues() {
         coinTableSymbol.setCellValueFactory(

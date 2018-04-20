@@ -14,6 +14,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,7 +38,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private AnchorPane mainPanel;
-     @FXML
+    @FXML
     private Button loginBtn;
     @FXML
     private TextField unField;
@@ -47,17 +49,18 @@ public class FXMLDocumentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }
-
-    @FXML
-    private void userLogin(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
-         if (checkPass()) {
-            verificationPassed();
-        }else{
-            failedLbl.setText("Incorrect Password!");
-        }
-
+        //lambda to set listener to button
+        loginBtn.setOnAction((event) -> {
+            try {
+                if (checkPass()) {
+                    verificationPassed();
+                } else {
+                    failedLbl.setText("Incorrect Password or Username!");
+                }
+            } catch (ClassNotFoundException | SQLException | IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }
 
     private boolean checkPass() throws ClassNotFoundException, SQLException {
@@ -68,7 +71,6 @@ public class FXMLDocumentController implements Initializable {
             Blob blob = rs.getBlob("salt");
             int blobLength = (int) blob.length();
             salt = blob.getBytes(1, blobLength);
-            System.out.println(PasswordGen.getPass(pwField.getText(), salt));
             checkpass = PasswordGen.getPass(pwField.getText(), salt).equals(rs.getString("pw")) && unField.getText().equals(rs.getString("login"));
 
         }
@@ -88,7 +90,7 @@ public class FXMLDocumentController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setOpacity(1);
         stage.setTitle("Main Menu");
-        stage.setScene(new Scene(root, 600, 400));
+        stage.setScene(new Scene(root, 600, 480));
         stage.showAndWait();
     }
 }

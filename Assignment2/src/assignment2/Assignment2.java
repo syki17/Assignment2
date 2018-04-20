@@ -25,6 +25,7 @@ public class Assignment2 extends Application {
         
         stage.setScene(scene);
         stage.show();
+        stage.setTitle("Login");
     }
 
     /**

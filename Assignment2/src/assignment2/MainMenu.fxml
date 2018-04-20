@@ -6,14 +6,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="483.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="assignment2.MainMenuController">
+<AnchorPane id="AnchorPane" prefHeight="597.0" prefWidth="603.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment2.MainMenuController">
    <children>
-      <TableView fx:id="coinTable" layoutX="85.0" layoutY="23.0" prefHeight="284.0" prefWidth="431.0">
+      <TableView fx:id="coinTable" layoutX="85.0" layoutY="70.0" prefHeight="284.0" prefWidth="431.0">
         <columns>
           <TableColumn fx:id="coinTableSymbol" prefWidth="182.0" text="Trading-Base Pairs" />
           <TableColumn fx:id="coinTablePrice" prefWidth="245.0" text="Price (Trading to Base Ratio) " />
         </columns>
       </TableView>
+      <TextField fx:id="regexMatchField" layoutX="163.0" layoutY="530.0" />
+      <Label layoutX="10.0" layoutY="535.0" text="Remove Items (Regex)" />
+      <Button fx:id="updateBtn" layoutX="380.0" layoutY="530.0" mnemonicParsing="false" text="Update" />
+      <CheckBox fx:id="newDataCheckBox" layoutX="163.0" layoutY="496.0" mnemonicParsing="false" text="New Data?" />
+      <Label layoutX="195.0" layoutY="27.0" prefHeight="15.0" prefWidth="211.0" text="Binance Exchange Data" />
+      <Label fx:id="btcPairsLbl" layoutX="85.0" layoutY="365.0" />
+      <Label fx:id="ethPairsLbl" layoutX="85.0" layoutY="380.0" />
+      <Label fx:id="usdtPairsLbl" layoutX="85.0" layoutY="395.0" />
+      <Label fx:id="bnbPairsLbl" layoutX="85.0" layoutY="410.0" />
    </children>
 </AnchorPane>

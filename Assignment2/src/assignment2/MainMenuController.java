@@ -42,14 +42,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class MainMenuController implements Initializable {
 
     @FXML
-    private TableView<coinInfo> coinTable;
+    private TableView<CoinInfo> coinTable;
     @FXML
-    private TableColumn<coinInfo, String> coinTableSymbol;
+    private TableColumn<CoinInfo, String> coinTableSymbol;
     @FXML
-    private TableColumn<coinInfo, Double> coinTablePrice;
+    private TableColumn<CoinInfo, Double> coinTablePrice;
 
-    private ObservableList<coinInfo> data;
-    private List<coinInfo> coinList = new ArrayList<>();
+    private ObservableList<CoinInfo> data;
     @FXML
     private TextField regexMatchField;
     @FXML
@@ -60,7 +59,7 @@ public class MainMenuController implements Initializable {
     private Label btcPairsLbl;
     @FXML
     private Label ethPairsLbl;
-   
+
     @FXML
     private Label usdtPairsLbl;
     @FXML
@@ -87,11 +86,14 @@ public class MainMenuController implements Initializable {
         });
 
     }
-/**
- *  Makes API call to Binance to get ticker information about all the coins on the exchange
- * @return Api JSON response as a string
- * @throws UnirestException 
- */
+
+    /**
+     * Makes API call to Binance to get ticker information about all the coins
+     * on the exchange
+     *
+     * @return Api JSON response as a string
+     * @throws UnirestException
+     */
     private String getCoins() throws UnirestException {
         Unirest.setTimeouts(240000, 600000);
         HttpResponse<String> response = Unirest.get("https://api.binance.com/api/v3/ticker/price")
@@ -99,12 +101,14 @@ public class MainMenuController implements Initializable {
                 .asString();
         return response.getBody();
     }
-/**
- * Build Gson object, stores it into a pojo class, and 
- * @throws UnirestException
- * @throws ClassNotFoundException
- * @throws SQLException 
- */
+
+    /**
+     * Build Gson object, stores it into a pojo class, and
+     *
+     * @throws UnirestException
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     private void buildGson() throws UnirestException, ClassNotFoundException, SQLException {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = new Gson();
@@ -142,17 +146,18 @@ public class MainMenuController implements Initializable {
         String sql = "SELECT * FROM coinData";
         ResultSet rs = sqlCon().createStatement().executeQuery(sql);
         while (rs.next()) {
-            coinInfo coin = new coinInfo(rs.getString("symbol"), rs.getBigDecimal("price"));
+            CoinInfo coin = new CoinInfo(rs.getString("symbol"), rs.getBigDecimal("price").stripTrailingZeros());
             data.add(coin);
-            coinList.add(coin);
+           
         }
-        coinList.removeIf(s -> s.getSymbol().matches(regex));
+       
+        data.removeIf(s -> s.getSymbol().matches(regex));// used when update button is hit
         btcPairsLbl.setText("Number of BTC Base Pairs: " + countMatches(".*BTC"));
         ethPairsLbl.setText("Number of ETH Base Pairs: " + countMatches(".*ETH"));
         usdtPairsLbl.setText("Number of USDT Base Pairs: " + countMatches(".*USDT"));
         bnbPairsLbl.setText("Number of BNB Base Pairs: " + countMatches(".*BNB"));
-        coinList.clear();
-        data.removeIf(s -> s.getSymbol().matches(regex));
+
+       
         coinTable.setItems(data);
     }
 
@@ -163,7 +168,7 @@ public class MainMenuController implements Initializable {
      * @return
      */
     private long countMatches(String toMatch) {
-        long count = coinList.stream()
+        long count = data.stream()
                 .filter(f -> f.getSymbol().matches(toMatch))
                 .count();
 
@@ -183,9 +188,9 @@ public class MainMenuController implements Initializable {
         return con;
     }
 
-
     /**
-     * Updates tableview fields. Gets fresh data if new data checkbox is selected.
+     * Updates tableview fields. Gets fresh data if new data checkbox is
+     * selected.
      *
      * @throws UnirestException
      * @throws ClassNotFoundException

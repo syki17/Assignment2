@@ -105,7 +105,7 @@ public class LoginController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setOpacity(1);
         stage.setTitle("Main Menu");
-        stage.setScene(new Scene(root, 600, 480));
+        stage.setScene(new Scene(root, 600, 600));
         stage.showAndWait();
     } 
 }

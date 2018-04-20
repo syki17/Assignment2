@@ -2,7 +2,7 @@ package assignment2;
 
 import java.math.BigDecimal;
 
-public final class coinInfo {
+public final class CoinInfo {
 
 private String symbol;
 private BigDecimal price;
@@ -18,9 +18,9 @@ private BigDecimal price;
 * @param price
 * @param symbol
 */
-public coinInfo(String symbol, BigDecimal price) {
-setSymbol(symbol);
-setPrice(price);
+public CoinInfo(String symbol, BigDecimal price) {
+this.symbol = symbol;
+this.price = price;
 }
 
 public String getSymbol() {

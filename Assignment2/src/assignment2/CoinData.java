@@ -20,7 +20,7 @@ public CoinData() {
 }
 
 /**
-*
+*   CoinData object. 
 * @param price
 * @param symbol
 */

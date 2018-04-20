@@ -10,13 +10,11 @@ import java.net.URL;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -34,7 +32,7 @@ import javafx.stage.Stage;
  *
  * @author jakub
  */
-public class FXMLDocumentController implements Initializable {
+public class LoginController implements Initializable {
 
     @FXML
     private AnchorPane mainPanel;
@@ -46,6 +44,8 @@ public class FXMLDocumentController implements Initializable {
     private PasswordField pwField;
     @FXML
     private Label failedLbl;
+    @FXML
+    private Label label;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -58,11 +58,16 @@ public class FXMLDocumentController implements Initializable {
                     failedLbl.setText("Incorrect Password or Username!");
                 }
             } catch (ClassNotFoundException | SQLException | IOException ex) {
-                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
-
+/**
+ *  Checks if the password hashes match. Uses a salt that stored in DB 
+ * @return True if passwords match, false if they don't 
+ * @throws ClassNotFoundException
+ * @throws SQLException 
+ */
     private boolean checkPass() throws ClassNotFoundException, SQLException {
         byte[] salt;
         boolean checkpass = false;
@@ -77,12 +82,22 @@ public class FXMLDocumentController implements Initializable {
         return checkpass;
     }
 
+    /**
+     * Build Connection object for remote DB access
+     * @return Connection Object
+     * @throws ClassNotFoundException
+     * @throws SQLException 
+     */
     private Connection sqlCon() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
         Connection con = DriverManager.getConnection("jdbc:mysql://sql.computerstudi.es/gc200271677", "gc200271677", "Y-xX3iij");
         return con;
     }
 
+    /**
+     * Leads main menu
+     * @throws IOException 
+     */
     private void verificationPassed() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
         Parent root = fxmlLoader.load();
@@ -92,5 +107,5 @@ public class FXMLDocumentController implements Initializable {
         stage.setTitle("Main Menu");
         stage.setScene(new Scene(root, 600, 480));
         stage.showAndWait();
-    }
+    } 
 }

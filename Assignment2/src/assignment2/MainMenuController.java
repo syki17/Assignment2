@@ -22,11 +22,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -63,7 +60,7 @@ public class MainMenuController implements Initializable {
     private Label btcPairsLbl;
     @FXML
     private Label ethPairsLbl;
-    private Label ltcPairsLbl;
+   
     @FXML
     private Label usdtPairsLbl;
     @FXML
@@ -90,7 +87,11 @@ public class MainMenuController implements Initializable {
         });
 
     }
-
+/**
+ *  Makes API call to Binance to get ticker information about all the coins on the exchange
+ * @return Api JSON response as a string
+ * @throws UnirestException 
+ */
     private String getCoins() throws UnirestException {
         Unirest.setTimeouts(240000, 600000);
         HttpResponse<String> response = Unirest.get("https://api.binance.com/api/v3/ticker/price")
@@ -129,7 +130,7 @@ public class MainMenuController implements Initializable {
     }
 
     /**
-     * Populate the table. takes a regex string
+     * Populate the table. takes a regex string to remove specific entries
      *
      * @param regex value taken from the regexMatchField
      * @throws ClassNotFoundException
@@ -182,17 +183,9 @@ public class MainMenuController implements Initializable {
         return con;
     }
 
-    /*
-               CallResult[] coinData = gson.fromJson(getCoins(), CallResult[].class);
-       List<coinInfo> coins = coinData
-               .filter(coin -> coin.getBaseCurrency().equals("Bitcoin"))
-                .collect(Collectors.toList());
-       
-        
-                System.out.println(coins);
-     */
+
     /**
-     * Updates tableview fields. Gets fresh data id new data checkbox is selected.
+     * Updates tableview fields. Gets fresh data if new data checkbox is selected.
      *
      * @throws UnirestException
      * @throws ClassNotFoundException

@@ -95,7 +95,7 @@ public class LoginController implements Initializable {
     }
 
     /**
-     * Leads main menu
+     * Loads main menu
      * @throws IOException 
      */
     private void verificationPassed() throws IOException {

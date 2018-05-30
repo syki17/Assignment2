@@ -9,5 +9,6 @@ PASSWORD = javarocks
 
 Pulls latest crypto info from binance and displays in a table.
 
-Uses unirest for api calls
-Gson for parsing the api calls and storing in a POJO
+- Unirest for api calls
+- Gson for parsing the api calls and storing in a POJO
+- Allows for use of Regex to filter out unwanted entries

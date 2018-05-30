@@ -184,7 +184,7 @@ public class MainMenuController implements Initializable {
      */
     private Connection sqlCon() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://sql.computerstudi.es/gc200271677", "gc200271677", "Y-xX3iij");
+        Connection con = DriverManager.getConnection("jdbc:mysql://sql.computerstudi.es/gc200271677", "*****", "***");
         return con;
     }
 
